@@ -1,6 +1,8 @@
 package serialize;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private int id;
     private String name;
 
@@ -15,5 +17,13 @@ public class Person {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
