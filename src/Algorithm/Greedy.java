@@ -2,6 +2,7 @@ package Algorithm;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 public class Greedy {
     public static void main(String[] args) {
@@ -14,9 +15,14 @@ public class Greedy {
         /**
          * ex2
          */
-        int[] station = {0,200,375,550,750,950};
-        int res = minstop(station, 400);
-        System.out.println(res);
+//        int[] station = {0,200,375,550,750,950};
+//        int res = minstop(station, 400);
+//        System.out.println(res);
+        /**
+         * 3
+         */
+        int[] k = {1,2,3,4,5,6,7,8,9,12};
+        System.out.println(binarySearch(k, 5));
     }
 
     //    public static String maxNumberFromDigits(int[] digits){
@@ -45,5 +51,20 @@ public class Greedy {
             currentStop = nextStop;
         }
         return result;
+    }
+    public static int binarySearch(int[]arr, int k){
+        int start = 0;
+        int end = arr.length-1;
+        int middle = (int)Math.floor((start+end)/2);
+        while (start<=end){
+            if(k < arr[middle]){
+                end = middle-1;
+            } else if (k>arr[middle]) {
+                start = middle+1;
+            }else{
+                return middle;
+            }
+        }
+        return -1;
     }
 }
