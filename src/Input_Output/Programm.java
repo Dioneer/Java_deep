@@ -2,6 +2,8 @@ package Input_Output;
 
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Programm {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         File file = new File("test.txt");
         File file2 = new File("111.txt");
         /**
@@ -48,14 +50,14 @@ public class Programm {
         /**
          * reader, writer
          */
-        try(FileWriter writer = new FileWriter(file); FileReader reader = new FileReader(file2)){
-            int i = -1;
-            while ((i = reader.read())!=-1) {
-                writer.write((char)i);
-            }
-        }catch(IOException ex){
-            System.out.println(ex.getMessage());
-        }
+//        try(FileWriter writer = new FileWriter(file); FileReader reader = new FileReader(file2)){
+//            int i = -1;
+//            while ((i = reader.read())!=-1) {
+//                writer.write((char)i);
+//            }
+//        }catch(IOException ex){
+//            System.out.println(ex.getMessage());
+//        }
 //        try(FileReader reader = new FileReader(file)){
 //            int line = -1;
 //            StringBuilder stringBuilder = new StringBuilder();
@@ -86,14 +88,27 @@ public class Programm {
         /**
          * buffer
          */
-        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))){
-            StringBuilder stringBuilder = new StringBuilder();
-            int l = -1;
-            while ((l = bis.read()) != -1){
-                System.out.println((char) l);
+//        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))){
+//            StringBuilder stringBuilder = new StringBuilder();
+//            int l = -1;
+//            while ((l = bis.read()) != -1){
+//                System.out.println((char) l);
+//            }
+//        }catch(IOException ex){
+//            System.out.println(ex.getMessage());
+//        }
+        /**
+         * socket
+         */
+        ServerSocket serverSocket = new ServerSocket(8081);
+        Socket input = serverSocket.accept();
+        StringBuilder stringBuilder = new StringBuilder();
+        try(Scanner in = new Scanner(input.getInputStream())){
+        while (in.hasNext()){
+            stringBuilder.append(in.next()).append(" ");
             }
-        }catch(IOException ex){
-            System.out.println(ex.getMessage());
         }
+        input.close();
+        System.out.println(stringBuilder);
     }
 }
