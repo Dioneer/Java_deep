@@ -1,16 +1,17 @@
 package Input_Output;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Programm {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         File file = new File("test.txt");
+        File file2 = new File("111.txt");
         /**
          * write text
          */
@@ -44,6 +45,55 @@ public class Programm {
 //        }catch(FileNotFoundException ex){
 //            System.out.println(ex.getMessage());
 //        }
-        System.out.println();
+        /**
+         * reader, writer
+         */
+        try(FileWriter writer = new FileWriter(file); FileReader reader = new FileReader(file2)){
+            int i = -1;
+            while ((i = reader.read())!=-1) {
+                writer.write((char)i);
+            }
+        }catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+//        try(FileReader reader = new FileReader(file)){
+//            int line = -1;
+//            StringBuilder stringBuilder = new StringBuilder();
+//            while((line = reader.read())!= -1) {
+//                stringBuilder.append((char)line);
+//            }
+//            System.out.println(stringBuilder);
+//            }catch(IOException ex){
+//            System.out.println(ex.getMessage());
+//            }
+        /**
+         * stream
+         */
+//        try(FileOutputStream fos = new FileOutputStream(file); FileInputStream fis = new FileInputStream(file2)){
+//            String arr = "Privet";
+//            fos.write(arr.getBytes());
+//        }catch (IOException ex){
+//            System.out.println(ex.getMessage());
+//        }
+//        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(file)); DataInputStream fis = new DataInputStream(new FileInputStream(file))){
+//            dos.writeUTF("Privet");
+//            dos.write(123);
+//            System.out.println(fis.readUTF());
+//            System.out.println(fis.read());
+//        }catch (IOException ex){
+//            System.out.println(ex.getMessage());
+//        }
+        /**
+         * buffer
+         */
+        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))){
+            StringBuilder stringBuilder = new StringBuilder();
+            int l = -1;
+            while ((l = bis.read()) != -1){
+                System.out.println((char) l);
+            }
+        }catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }
