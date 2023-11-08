@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class ReadObj {
     public static void main(String[] args) {
-//        try(FileInputStream fis = new FileInputStream("people.bin"); ObjectInputStream ois = new ObjectInputStream(fis )){
+//        try(FileInputStream fis = new FileInputStream("people.bin"); ObjectInputStream ois = new ObjectInputStream(fis)){
 //            Person person1 = (Person) ois.readObject();
 //            Person person2 = (Person) ois.readObject();
 //            System.out.println(person1);
@@ -20,7 +20,7 @@ public class ReadObj {
 //        }catch (IOException e) {
 //            System.out.println(e.getMessage());
 //        }
-        try(FileInputStream fis = new FileInputStream("people.bin"); ObjectInputStream ois = new ObjectInputStream(fis )){
+        try(FileInputStream fis = new FileInputStream("people.bin"); ObjectInputStream ois = new ObjectInputStream(fis)){
             int i = ois.readInt();
             Person[] person = new Person[i];
             for (int j = 0; j < i; j++) {
