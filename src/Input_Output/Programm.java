@@ -103,9 +103,15 @@ public class Programm {
         ServerSocket serverSocket = new ServerSocket(8081);
         Socket input = serverSocket.accept();
         StringBuilder stringBuilder = new StringBuilder();
-        try(Scanner in = new Scanner(input.getInputStream())){
+        try(Scanner in = new Scanner(input.getInputStream()); PrintWriter out = new PrintWriter(input.getOutputStream());Scanner send = new Scanner(System.in) ){
         while (in.hasNext()){
+            System.out.println("Info from client: ");
             stringBuilder.append(in.next()).append(" ");
+            System.out.println(stringBuilder.toString());
+            System.out.println("Write answer");
+            String s = send.nextLine();
+            out.println(s);
+            out.flush();
             }
         }
         input.close();
