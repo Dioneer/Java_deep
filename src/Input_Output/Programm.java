@@ -101,20 +101,34 @@ public class Programm {
          * socket
          */
         ServerSocket serverSocket = new ServerSocket(8081);
-        Socket input = serverSocket.accept();
-        StringBuilder stringBuilder = new StringBuilder();
-        try(Scanner in = new Scanner(input.getInputStream()); PrintWriter out = new PrintWriter(input.getOutputStream());Scanner send = new Scanner(System.in) ){
-        while (in.hasNext()){
-            System.out.println("Info from client: ");
-            stringBuilder.append(in.next()).append(" ");
-            System.out.println(stringBuilder.toString());
-            System.out.println("Write answer");
-            String s = send.nextLine();
-            out.println(s);
-            out.flush();
-            }
+        while (true){
+            Socket sock = serverSocket.accept();
+            Thread tread = new Thread(new ClientHandler(sock));
+            tread.start();
         }
-        input.close();
-        System.out.println(stringBuilder);
+    }
+}
+class ClientHandler implements Runnable{
+    Socket socket;
+    public ClientHandler(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run(){
+        try(Scanner in = new Scanner(socket.getInputStream()); PrintWriter out = new PrintWriter(socket.getOutputStream());Scanner send = new Scanner(System.in) ) {
+            while (in.hasNext()) {
+                StringBuilder stringBuilder = new StringBuilder();
+                System.out.println("Info from client: ");
+                stringBuilder.append(in.nextLine()).append(" ");
+                System.out.println(stringBuilder);
+                System.out.println("Write answer");
+                String s = send.nextLine();
+                out.println(s);
+                out.flush();
+            }
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
