@@ -1,6 +1,10 @@
 package Thread;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.IntStream;
 
 
@@ -41,13 +45,17 @@ class MyThread2 implements Runnable{
 }
 
 class MyThread3 implements Runnable{
+    Lock lock = new ReentrantLock();
     int x = 0;
+//synchronized
     @Override
-    public synchronized void run() {
+    public void run() {
+        lock.lock();
         for (int i = 0; i < 50; i++) {
             int temp = x;
             temp++;
             x = temp;
+            lock.unlock();
         }
     }
 
