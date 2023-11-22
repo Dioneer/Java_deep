@@ -8,7 +8,8 @@ public class Program {
 //        selectionSort();
 //        insertionSort();
         int[]arr = {1,2,6,4,7,5,2,11,16};
-        mergeSort(arr);
+//        mergeSort(arr);
+        System.out.println(Arrays.toString(quickSort(arr, 0,  arr.length-1)));
     }
     public static void bubleSort(){
         int[]arr = {1,2,6,4,7,5,2,11,16};
@@ -91,5 +92,33 @@ public class Program {
             arr[ind++] = big[t];
         }
         System.out.println(Arrays.toString(arr));
+    }
+    public static int[] quickSort(int[] arr, int l, int r){
+        if(l>=r) return arr;
+        int pi = partition(arr, l, r);
+        quickSort(arr, l, pi - 1);
+        quickSort(arr, pi, r);
+        return arr;
+    }
+    public static int partition(int[] arr, int l, int r){
+        int ri = r;
+        int li = l;
+        int pivot = arr[l+(r-l)/2];
+        while (li<=ri) {
+            while (arr[li] < pivot) {
+                li++;
+            }
+            while (arr[ri] > pivot) {
+                ri--;
+            }
+            if (li <= ri) {
+                int temp = arr[ri];
+                arr[ri] = arr[li];
+                arr[li] = temp;
+                li++;
+                ri--;
+            }
+        }
+        return li;
     }
 }
